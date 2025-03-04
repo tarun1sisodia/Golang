@@ -1,25 +1,33 @@
-// Package greetings provides functions to generate greeting messages.
 package greetings
 
 import (
-	"errors"
-	"fmt"
+    "errors"
+    "fmt"
+    "math/rand"
 )
 
-// Hello returns a greeting message for the given name.
-/*func Hello(name string) string {
-	message := fmt.Sprintf("Hi ,%v.Welcome!",name)
-	return message
-}*/
-//Now here we are handling an error if user did not passe the user name in code then how our package will show error to user.
-
-//we are naming the function using func keyword then give a name to function then passed name parameter.
-//we passed string and error
+// Hello returns a greeting for the named person.
 func Hello(name string) (string, error) {
-	if name == "" {
-		//returning to user null or error if user did not pass any context or input
-		return "", errors.New("name is not passed at end user")
-	}
-	message := fmt.Sprintf("Hi,%v.Welcome!", name)
-	return message, nil
+    // If no name was given, return an error with a message.
+    if name == "" {
+        return name, errors.New("empty name")
+    }
+    // Create a message using a random format.
+    message := fmt.Sprintf(randomFormat(), name)
+    return message, nil
+}
+
+// randomFormat returns one of a set of greeting messages. The returned
+// message is selected at random.
+func randomFormat() string {
+    // A slice of message formats.
+    formats := []string{
+        "Hi, %v. Welcome!",
+        "Great to see you, %v!",
+        "Hail, %v! Well met!",
+    }
+
+    // Return a randomly selected message format by specifying
+    // a random index for the slice of formats.
+    return formats[rand.Intn(len(formats))]
 }
